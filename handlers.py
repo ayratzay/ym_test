@@ -1,7 +1,6 @@
 from datetime import datetime
 import urllib
 
-
 def urldecode(str):
   return urllib.parse.unquote(str)
 
@@ -29,7 +28,7 @@ class Session:
         self.money = money
         self.actions = 1
         self.used_search = 0
-        self.success_search = 0
+        self.categ_search = 0
         self.parse_url(url)
 
     def add_action(self, ts, geo, hid, money, url):
@@ -47,12 +46,10 @@ class Session:
             return True
 
     def parse_url(self, url):
-        if '/search.xml?text=' in url:
+        if '/search.xml' in url and 'text=' in url:
             self.used_search = 1
-        if '/search.xml?text=' in url and 'page=' in url:
-            self.success_search = 1
-        if self.used_search == 1 and 'model.xml?modelid=' in url:
-            self.success_search = 1
+        if '/search.xml' in url and 'text=' in url and 'hid=' in url:
+            self.categ_search = 1
 
 class User:
 
